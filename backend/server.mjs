@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import ViteExpress from "vite-express";
 
-import routesRouter from "./routes/routes.mjs";
+import routesRouter from "./routes/route.mjs";
 import vehiclesRouter from "./routes/vehicles.mjs";
 import inquiriesRouter from "./routes/inquiries.mjs";
 import categoriesRouter from "./routes/categories.mjs";
