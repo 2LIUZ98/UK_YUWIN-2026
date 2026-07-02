@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 
 export default function HomePage() {
   return (
@@ -18,53 +18,37 @@ export default function HomePage() {
         </button>
       </section>
 
-
       <section className="max-w-6xl mx-auto py-12 px-6">
-
         <h2 className="text-3xl font-bold text-center mb-8">
           Our Services
         </h2>
 
-
         <div className="grid md:grid-cols-3 gap-6">
-
           <div className="bg-white p-6 rounded-xl shadow">
-            <h3 className="text-xl font-bold mb-2">
-              Airport Transfer
-            </h3>
-
+            <h3 className="text-xl font-bold mb-2">Airport Transfer</h3>
             <p className="text-gray-600">
               Reliable airport transfers.
             </p>
           </div>
 
-
           <div className="bg-white p-6 rounded-xl shadow">
-            <h3 className="text-xl font-bold mb-2">
-              Long Distance
-            </h3>
-
+            <h3 className="text-xl font-bold mb-2">Long Distance</h3>
             <p className="text-gray-600">
               Comfortable private journeys.
             </p>
           </div>
 
-
           <div className="bg-white p-6 rounded-xl shadow">
-            <h3 className="text-xl font-bold mb-2">
-              Day Tour
-            </h3>
-
+            <h3 className="text-xl font-bold mb-2">Day Tour</h3>
             <p className="text-gray-600">
               Flexible private tours.
             </p>
           </div>
-
         </div>
-
       </section>
 
-
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
