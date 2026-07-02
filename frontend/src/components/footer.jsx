@@ -72,10 +72,6 @@ export default function Footer() {
               Contact
             </h3>
 
-            <p className="text-gray-300">
-              Email: info@ukyuwin.com
-            </p>
-
             <p className="text-gray-300 mt-2">
               WeChat: UKYUWIN
             </p>
