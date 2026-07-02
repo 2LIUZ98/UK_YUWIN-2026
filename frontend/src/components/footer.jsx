@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -80,20 +79,6 @@ export default function Footer() {
             <p className="text-gray-300 mt-2">
               WeChat: UKYUWIN
             </p>
-
-            <div className="flex gap-4 mt-6">
-              <a href="#" className="hover:text-blue-400">
-                <Facebook size={20} />
-              </a>
-
-              <a href="#" className="hover:text-blue-400">
-                <Instagram size={20} />
-              </a>
-
-              <a href="#" className="hover:text-blue-400">
-                <Twitter size={20} />
-              </a>
-            </div>
           </div>
 
         </div>
