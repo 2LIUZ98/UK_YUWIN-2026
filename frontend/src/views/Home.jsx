@@ -26,32 +26,41 @@ export default function HomePage() {
       </section>
 
       {/* SERVICES */}
-      <section className="max-w-6xl mx-auto py-16 px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Our Services
-        </h2>
+<section className="max-w-6xl mx-auto py-16 px-6">
+  <h2 className="text-3xl font-bold text-center mb-12">
+    Our Services
+  </h2>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <Link to="/airport-transfer">
-             <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition cursor-pointer">
-                 <h3 className="text-xl font-semibold mb-2">
-                    Airport Transfer
-                  </h3>
+  <div className="grid md:grid-cols-3 gap-6">
 
-              <p className="text-gray-400">
-                Reliable airport pickup and drop-off services across all major UK airports.
-              </p>
-            </div>
-          </Link>
+    {/* AIRPORT */}
+    <Link to="/airport-transfer">
+      <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition cursor-pointer">
+        <h3 className="text-xl font-semibold mb-2">
+          Airport Transfer
+        </h3>
 
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition">
-            <h3 className="text-xl font-semibold mb-2">Day Tours</h3>
-            <p className="text-gray-400">
-              Flexible custom tours tailored to your schedule and destinations.
-            </p>
-          </div>
-        </div>
-      </section>
+        <p className="text-gray-400">
+          Reliable airport pickup and drop-off services across all major UK airports.
+        </p>
+      </div>
+    </Link>
+
+    {/* DAY TOURS (FIXED) */}
+    <Link to="/day-tours">
+      <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition cursor-pointer">
+        <h3 className="text-xl font-semibold mb-2">
+          Day Tours
+        </h3>
+
+        <p className="text-gray-400">
+          Flexible custom tours tailored to your schedule and destinations.
+        </p>
+      </div>
+    </Link>
+
+  </div>
+</section>
 
       <Footer />
     </div>

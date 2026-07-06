@@ -4,6 +4,9 @@ import {
   Sun,
   Moon,
   Menu as MenuIcon,
+  User,
+  LogOut,
+  LayoutDashboard,
   ChevronDown,
 } from "lucide-react";
 
@@ -22,6 +25,7 @@ export default function Header({
 
   const userEmail = userId ? `${userId.slice(0, 10)}...` : "";
 
+  // ================= LOAD CATEGORIES =================
   useEffect(() => {
     async function loadCategories() {
       try {
@@ -29,10 +33,13 @@ export default function Header({
           "https://uk-yuwin-2026.onrender.com/categories"
         );
 
+        if (!res.ok) throw new Error("Failed to load categories");
+
         const data = await res.json();
         setCategories(data);
       } catch (err) {
         console.error("Category fetch error:", err);
+        setCategories([]);
       }
     }
 
@@ -44,6 +51,7 @@ export default function Header({
     window.location.href = "/";
   };
 
+  // ================= ROUTES (ANTD v5 FIXED) =================
   const routesItems = categories.map((category) => ({
     key: category.Category_ID,
     label: (
@@ -61,9 +69,10 @@ export default function Header({
 
   return (
     <>
-      {/* ================= DESKTOP ================= */}
+      {/* ================= DESKTOP HEADER ================= */}
       <nav className="hidden md:flex bg-slate-900 text-white px-10 py-4 items-center justify-between border-b border-slate-800 sticky top-0 z-50">
 
+        {/* LEFT */}
         <div className="flex items-center gap-8">
 
           <Link to="/" className="text-xl font-bold">
@@ -74,8 +83,12 @@ export default function Header({
             Home
           </Link>
 
-          {/* ROUTES */}
-          <Dropdown menu={{ items: routesItems }} trigger={["hover"]}>
+          {/* ROUTES DROPDOWN (FIXED) */}
+          <Dropdown
+            menu={{ items: routesItems }}
+            trigger={["hover"]}
+            placement="bottomLeft"
+          >
             <button className="flex items-center gap-1 hover:text-blue-400 transition">
               Routes <ChevronDown size={16} />
             </button>
@@ -90,6 +103,7 @@ export default function Header({
 
         </div>
 
+        {/* RIGHT */}
         <div className="flex items-center gap-4">
 
           <button
@@ -99,13 +113,27 @@ export default function Header({
             {colorTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          <Avatar
-            onClick={() => setOpen(true)}
-            src={profilePic}
-            style={{ cursor: "pointer", background: "#1e293b" }}
-          >
-            {userName?.[0]}
-          </Avatar>
+          {userId ? (
+            <Avatar
+              onClick={() => setOpen(true)}
+              src={profilePic}
+              style={{ cursor: "pointer" }}
+            >
+              {userName?.[0]}
+            </Avatar>
+          ) : (
+            <Link to="/auth">
+              <Button
+                style={{
+                  borderColor: "#2563eb",
+                  color: "#2563eb",
+                  borderRadius: 20,
+                }}
+              >
+                Login
+              </Button>
+            </Link>
+          )}
 
         </div>
       </nav>
@@ -126,19 +154,13 @@ export default function Header({
 
       </header>
 
-      {/* ================= MAIN DRAWER ================= */}
+      {/* ================= MOBILE DRAWER ================= */}
       <Drawer
         open={open}
         onClose={() => setOpen(false)}
         placement="right"
-        styles={{
-          body: {
-            backgroundColor: "#0f172a",
-            color: "white",
-          },
-        }}
       >
-        <div className="flex flex-col gap-5 text-white">
+        <div className="flex flex-col gap-5">
 
           <Link to="/" onClick={() => setOpen(false)}>
             Home
@@ -158,33 +180,34 @@ export default function Header({
             Book Now
           </Link>
 
-          <hr className="border-slate-700" />
+          <hr />
 
-          <button onClick={handleLogout} className="text-left text-red-400">
+          <Link to="/dashboard" onClick={() => setOpen(false)}>
+            Dashboard
+          </Link>
+
+          <Link to={`/profile/${userId}`} onClick={() => setOpen(false)}>
+            Profile
+          </Link>
+
+          <button
+            onClick={handleLogout}
+            className="text-left text-red-500"
+          >
             Logout
           </button>
 
         </div>
       </Drawer>
 
-      {/* ================= ROUTES DRAWER (FIXED STYLE) ================= */}
+      {/* ================= ROUTES DRAWER ================= */}
       <Drawer
-        title={<span className="text-white font-bold">Routes</span>}
+        title="Routes"
         placement="right"
         open={routesDrawer}
         onClose={() => setRoutesDrawer(false)}
-        styles={{
-          header: {
-            backgroundColor: "#0f172a",
-            borderBottom: "1px solid #1e293b",
-          },
-          body: {
-            backgroundColor: "#0f172a",
-            color: "white",
-          },
-        }}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
 
           {categories.map((category) => (
             <Link
@@ -195,14 +218,7 @@ export default function Header({
                   : `/routes/${category.Category_ID}`
               }
               onClick={() => setRoutesDrawer(false)}
-              className="
-                p-4 rounded-lg 
-                bg-slate-900 
-                border border-slate-800 
-                hover:border-blue-500 
-                hover:bg-slate-800 
-                transition
-              "
+              className="border border-slate-200 rounded-lg p-3 hover:bg-slate-100"
             >
               {category.Category_Name}
             </Link>
