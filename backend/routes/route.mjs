@@ -24,25 +24,13 @@ routesRouter.get("/:id", (req, res) => {
 // ==============================
 // NEW: Airport Transfer API
 // ==============================
+// Airport routes ONLY (Category_ID = 1)
 routesRouter.get("/airport/all", (req, res) => {
     try {
         const stmt = db.prepare(`
-            SELECT 
-                r.Route_ID,
-                r.Start_Point,
-                r.Destination,
-                c.Category_Name,
-                r.Price_1_Passenger,
-                r.Price_2_Passengers,
-                r.Price_3_Passengers,
-                r.Price_4_Passengers,
-                r.Price_5_Passengers,
-                r.Price_6_Passengers,
-                r.Price_7_Passengers,
-                r.Price_8_Passengers
-            FROM ROUTES r
-            JOIN route_categories c
-            ON r.Category_ID = c.Category_ID
+            SELECT *
+            FROM ROUTES
+            WHERE Category_ID = 1
         `);
 
         const results = stmt.all();
