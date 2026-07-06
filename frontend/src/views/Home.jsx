@@ -1,6 +1,6 @@
 import Footer from "../components/footer";
 import Header from "../components/header";
-import AirportTransfer from "./views/Airport";
+import AirportTransfer from "../views/Airport";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
