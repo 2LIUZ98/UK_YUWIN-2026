@@ -1,39 +1,33 @@
 import { useEffect, useState } from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 export default function AirportTransfer() {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchRoutes();
-  }, []);
-
-  const fetchRoutes = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/airports");
-      const data = await res.json();
-      setRoutes(data);
-    } catch (err) {
-      console.error("Failed to load airport routes:", err);
-    } finally {
-      setLoading(false);
+    async function loadRoutes() {
+      try {
+        const res = await fetch("/api/routes");
+        const data = await res.json();
+        setRoutes(data);
+      } catch (err) {
+        console.error("Error loading routes:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  };
+
+    loadRoutes();
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
 
-      <Header />
-
-      {/* HERO */}
-      <section className="bg-slate-900 py-16 px-6 text-center border-b border-slate-800">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Airport Transfers
-        </h1>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          View all available airport routes and pricing based on passenger count.
+      {/* HEADER */}
+      <section className="py-16 text-center border-b border-slate-800">
+        <h1 className="text-4xl font-bold">Airport Transfers</h1>
+        <p className="text-gray-400 mt-2">
+          All UK airport routes and pricing
         </p>
       </section>
 
@@ -41,50 +35,69 @@ export default function AirportTransfer() {
       <section className="max-w-6xl mx-auto px-6 py-12">
 
         {loading ? (
-          <p className="text-center text-gray-400">Loading routes...</p>
-        ) : routes.length === 0 ? (
-          <p className="text-center text-gray-400">
-            No airport routes available.
-          </p>
+          <p className="text-gray-400">Loading...</p>
         ) : (
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
 
-            {routes.map((route) => (
+            {routes.map((r) => (
               <div
-                key={route.id}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-blue-600 transition"
+                key={r.Route_ID}
+                className="bg-slate-900 border border-slate-800 p-6 rounded-xl"
               >
 
-                <h2 className="text-xl font-semibold mb-2">
-                  {route.airport} → {route.destination}
+                {/* Route Title */}
+                <h2 className="text-xl font-semibold mb-1">
+                  {r.Start_Point} → {r.Destination}
                 </h2>
 
-                <p className="text-gray-400 mb-4">
-                  Professional airport transfer service
+                <p className="text-sm text-gray-400 mb-4">
+                  {r.Category_Name}
                 </p>
 
-                {/* PRICES */}
-                <div className="space-y-2 text-sm">
+                {/* Prices */}
+                <div className="space-y-1 text-sm">
 
-                  <div className="flex justify-between border-b border-slate-800 pb-2">
-                    <span>1–4 Passengers</span>
-                    <span className="text-blue-400 font-semibold">
-                      £{route.price_1_4}
-                    </span>
+                  <div className="flex justify-between">
+                    <span>1 Passenger</span>
+                    <span>£{r.Price_1_Passenger}</span>
                   </div>
 
-                  <div className="flex justify-between border-b border-slate-800 pb-2">
-                    <span>5–8 Passengers</span>
-                    <span className="text-blue-400 font-semibold">
-                      £{route.price_5_8}
-                    </span>
+                  <div className="flex justify-between">
+                    <span>2 Passengers</span>
+                    <span>£{r.Price_2_Passengers}</span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span>3 Passengers</span>
+                    <span>£{r.Price_3_Passengers}</span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span>4 Passengers</span>
+                    <span>£{r.Price_4_Passengers}</span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span>5 Passengers</span>
+                    <span>£{r.Price_5_Passengers}</span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span>6 Passengers</span>
+                    <span>£{r.Price_6_Passengers}</span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span>7 Passengers</span>
+                    <span>£{r.Price_7_Passengers}</span>
+                  </div>
+
+                  <div className="flex justify-between font-semibold">
+                    <span>8 Passengers</span>
+                    <span>£{r.Price_8_Passengers}</span>
                   </div>
 
                 </div>
-
-                <button className="mt-5 w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-semibold">
-                  Book This Route
-                </button>
 
               </div>
             ))}
@@ -93,8 +106,6 @@ export default function AirportTransfer() {
         )}
 
       </section>
-
-      <Footer />
     </div>
   );
 }
