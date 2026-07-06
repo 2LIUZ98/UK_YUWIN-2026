@@ -1,11 +1,13 @@
 import Footer from "../components/footer";
 import Header from "../components/header";
+import AirportTransfer from "./views/Airport";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
 
-      {/* HEADER (MISSING BEFORE) */}
+      {/* HEADER */}
       <Header />
 
       {/* HERO SECTION */}
@@ -30,19 +32,17 @@ export default function HomePage() {
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition">
-            <h3 className="text-xl font-semibold mb-2">Airport Transfer</h3>
-            <p className="text-gray-400">
-              Reliable airport pickup and drop-off services across all major UK airports.
-            </p>
-          </div>
+          <Link to="/airport-transfer">
+             <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition cursor-pointer">
+                 <h3 className="text-xl font-semibold mb-2">
+                    Airport Transfer
+                  </h3>
 
-          <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition">
-            <h3 className="text-xl font-semibold mb-2">Long Distance Travel</h3>
-            <p className="text-gray-400">
-              Comfortable private journeys between cities with professional drivers.
-            </p>
-          </div>
+              <p className="text-gray-400">
+                Reliable airport pickup and drop-off services across all major UK airports.
+              </p>
+            </div>
+          </Link>
 
           <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-blue-600 transition">
             <h3 className="text-xl font-semibold mb-2">Day Tours</h3>
