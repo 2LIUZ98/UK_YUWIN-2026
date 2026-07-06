@@ -1,46 +1,28 @@
 import express from "express";
-const routesRouter = express.Router();
-import db from "./db.mjs";
+import cors from "cors";
+import ViteExpress from "vite-express";
 
-// ==============================
-// Airport routes FIRST (IMPORTANT)
-// ==============================
-routesRouter.get("/airport/all", (req, res) => {
-    try {
-        const stmt = db.prepare(`
-            SELECT *
-            FROM ROUTES
-            WHERE Category_ID = 1
-        `);
+import routesRouter from "./routes/route.mjs";
+import vehiclesRouter from "./routes/vehicles.mjs";
+import inquiriesRouter from "./routes/inquiries.mjs";
+import categoriesRouter from "./routes/categories.mjs";
 
-        const results = stmt.all();
-        res.json(results);
+// Initialise Express application
+const app = express();
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to fetch airport routes" });
-    }
+// Enable Cross-Origin Resource Sharing (CORS)
+app.use(cors());
+
+// Parse incoming JSON requests
+app.use(express.json());
+
+// Register API routes
+app.use("/routes", routesRouter);
+app.use("/vehicles", vehiclesRouter);
+app.use("/inquiries", inquiriesRouter);
+app.use("/categories", categoriesRouter);
+
+// Start server using ViteExpress
+ViteExpress.listen(app, 3000, () => {
+    console.log("Server running at http://localhost:3000");
 });
-
-// ==============================
-// existing routes
-// ==============================
-routesRouter.get("/", (req, res) => {
-    const stmt = db.prepare("SELECT * FROM ROUTES");
-    const results = stmt.all();
-    res.json(results);
-});
-
-// MUST stay last
-routesRouter.get("/:id", (req, res) => {
-    const stmt = db.prepare("SELECT * FROM ROUTES WHERE Route_ID = ?");
-    const result = stmt.get(req.params.id);
-
-    if (!result) {
-        return res.status(404).json({ message: "Route not found" });
-    }
-
-    res.json(result);
-});
-
-export default routesRouter;
