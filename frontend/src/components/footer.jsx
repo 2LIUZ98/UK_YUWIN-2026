@@ -81,7 +81,7 @@ export default function Footer() {
     </li>
 
     <li>
-      <Link to="/services" className="hover:text-blue-400">
+      <Link to="/day-tours" className="hover:text-blue-400">
         Day Tours
       </Link>
     </li>

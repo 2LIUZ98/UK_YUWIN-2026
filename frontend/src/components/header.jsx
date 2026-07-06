@@ -51,17 +51,18 @@ export default function Header({
     window.location.href = "/";
   };
 
-  // ================= ROUTES (ANTD v5 FIXED) =================
+  // ================= ROUTE MAPPING (FIXED) =================
+  const getRouteLink = (id) => {
+    if (id === 1) return "/airport-transfer"; // Airport
+    if (id === 3) return "/day-tours";        // Day Tours (FIXED)
+    return `/routes/${id}`;
+  };
+
+  // ================= DESKTOP DROPDOWN =================
   const routesItems = categories.map((category) => ({
     key: category.Category_ID,
     label: (
-      <Link
-        to={
-          category.Category_ID === 1
-            ? "/airport-transfer"
-            : `/routes/${category.Category_ID}`
-        }
-      >
+      <Link to={getRouteLink(category.Category_ID)}>
         {category.Category_Name}
       </Link>
     ),
@@ -72,7 +73,6 @@ export default function Header({
       {/* ================= DESKTOP HEADER ================= */}
       <nav className="hidden md:flex bg-slate-900 text-white px-10 py-4 items-center justify-between border-b border-slate-800 sticky top-0 z-50">
 
-        {/* LEFT */}
         <div className="flex items-center gap-8">
 
           <Link to="/" className="text-xl font-bold">
@@ -83,12 +83,8 @@ export default function Header({
             Home
           </Link>
 
-          {/* ROUTES DROPDOWN (FIXED) */}
-          <Dropdown
-            menu={{ items: routesItems }}
-            trigger={["hover"]}
-            placement="bottomLeft"
-          >
+          {/* ROUTES DROPDOWN */}
+          <Dropdown menu={{ items: routesItems }} trigger={["hover"]}>
             <button className="flex items-center gap-1 hover:text-blue-400 transition">
               Routes <ChevronDown size={16} />
             </button>
@@ -103,7 +99,6 @@ export default function Header({
 
         </div>
 
-        {/* RIGHT */}
         <div className="flex items-center gap-4">
 
           <button
@@ -113,27 +108,13 @@ export default function Header({
             {colorTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {userId ? (
-            <Avatar
-              onClick={() => setOpen(true)}
-              src={profilePic}
-              style={{ cursor: "pointer" }}
-            >
-              {userName?.[0]}
-            </Avatar>
-          ) : (
-            <Link to="/auth">
-              <Button
-                style={{
-                  borderColor: "#2563eb",
-                  color: "#2563eb",
-                  borderRadius: 20,
-                }}
-              >
-                Login
-              </Button>
-            </Link>
-          )}
+          <Avatar
+            onClick={() => setOpen(true)}
+            src={profilePic}
+            style={{ cursor: "pointer", background: "#1e293b" }}
+          >
+            {userName?.[0]}
+          </Avatar>
 
         </div>
       </nav>
@@ -154,11 +135,17 @@ export default function Header({
 
       </header>
 
-      {/* ================= MOBILE DRAWER ================= */}
+      {/* ================= MAIN DRAWER ================= */}
       <Drawer
         open={open}
         onClose={() => setOpen(false)}
         placement="right"
+        styles={{
+          body: {
+            backgroundColor: "#0f172a",
+            color: "white",
+          },
+        }}
       >
         <div className="flex flex-col gap-5">
 
@@ -180,15 +167,7 @@ export default function Header({
             Book Now
           </Link>
 
-          <hr />
-
-          <Link to="/dashboard" onClick={() => setOpen(false)}>
-            Dashboard
-          </Link>
-
-          <Link to={`/profile/${userId}`} onClick={() => setOpen(false)}>
-            Profile
-          </Link>
+          <hr className="border-slate-700" />
 
           <button
             onClick={handleLogout}
@@ -202,23 +181,36 @@ export default function Header({
 
       {/* ================= ROUTES DRAWER ================= */}
       <Drawer
-        title="Routes"
+        title={<span className="text-white font-bold">Routes</span>}
         placement="right"
         open={routesDrawer}
         onClose={() => setRoutesDrawer(false)}
+        styles={{
+          header: {
+            backgroundColor: "#0f172a",
+            borderBottom: "1px solid #1e293b",
+          },
+          body: {
+            backgroundColor: "#0f172a",
+            color: "white",
+          },
+        }}
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
 
           {categories.map((category) => (
             <Link
               key={category.Category_ID}
-              to={
-                category.Category_ID === 1
-                  ? "/airport-transfer"
-                  : `/routes/${category.Category_ID}`
-              }
+              to={getRouteLink(category.Category_ID)}
               onClick={() => setRoutesDrawer(false)}
-              className="border border-slate-200 rounded-lg p-3 hover:bg-slate-100"
+              className="
+                p-4 rounded-lg 
+                bg-slate-900 
+                border border-slate-800 
+                hover:border-blue-500 
+                hover:bg-slate-800 
+                transition
+              "
             >
               {category.Category_Name}
             </Link>
