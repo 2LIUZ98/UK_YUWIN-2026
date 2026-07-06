@@ -7,7 +7,7 @@ export default function AirportTransfer() {
   useEffect(() => {
     async function loadRoutes() {
       try {
-        const res = await fetch("/api/routes");
+        const res = await fetch("https://uk-yuwin-2026.onrender.com/routes/airport/all");
         const data = await res.json();
         setRoutes(data);
       } catch (err) {
@@ -36,6 +36,8 @@ export default function AirportTransfer() {
 
         {loading ? (
           <p className="text-gray-400">Loading...</p>
+        ) : routes.length === 0 ? (
+          <p className="text-gray-400">No airport routes found.</p>
         ) : (
           <div className="grid md:grid-cols-3 gap-6">
 
@@ -45,16 +47,14 @@ export default function AirportTransfer() {
                 className="bg-slate-900 border border-slate-800 p-6 rounded-xl"
               >
 
-                {/* Route Title */}
                 <h2 className="text-xl font-semibold mb-1">
                   {r.Start_Point} → {r.Destination}
                 </h2>
 
                 <p className="text-sm text-gray-400 mb-4">
-                  {r.Category_Name}
+                  Category ID: {r.Category_ID}
                 </p>
 
-                {/* Prices */}
                 <div className="space-y-1 text-sm">
 
                   <div className="flex justify-between">
