@@ -44,6 +44,13 @@ export default function Footer() {
                 </Link>
               </li>
 
+              {/* ✅ ADDED HERE */}
+              <li>
+                <Link to="/airport-transfer" className="hover:text-blue-400">
+                  Airport Transfers
+                </Link>
+              </li>
+
               <li>
                 <Link to="/contact" className="hover:text-blue-400">
                   Contact
