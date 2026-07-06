@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function AirportTransfer() {
   const [routes, setRoutes] = useState([]);
@@ -24,6 +26,9 @@ export default function AirportTransfer() {
     <div className="min-h-screen bg-slate-950 text-white">
 
       {/* HEADER */}
+      <Header />
+
+      {/* PAGE HEADER */}
       <section className="py-16 text-center border-b border-slate-800">
         <h1 className="text-4xl font-bold">Airport Transfers</h1>
         <p className="text-gray-400 mt-2">
@@ -106,6 +111,10 @@ export default function AirportTransfer() {
         )}
 
       </section>
+
+      {/* FOOTER */}
+      <Footer />
+
     </div>
   );
 }
