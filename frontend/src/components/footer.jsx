@@ -60,19 +60,40 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">
-              Our Services
-            </h3>
+          {/* Services */}
+<div>
+  <h3 className="text-lg font-semibold mb-4">
+    Our Services
+  </h3>
 
-            <ul className="space-y-2 text-gray-300">
-              <li>Airport Transfers</li>
-              <li>Long Distance Travel</li>
-              <li>Day Tours</li>
-              <li>Private Hire</li>
-            </ul>
-          </div>
+  <ul className="space-y-2 text-gray-300">
 
+    <li>
+      <Link to="/airport-transfer" className="hover:text-blue-400">
+        Airport Transfers
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/services" className="hover:text-blue-400">
+        Long Distance Travel
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/services" className="hover:text-blue-400">
+        Day Tours
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/services" className="hover:text-blue-400">
+        Private Hire
+      </Link>
+    </li>
+
+  </ul>
+</div>
           {/* Contact */}
           <div>
             <h3 className="text-lg font-semibold mb-4">
