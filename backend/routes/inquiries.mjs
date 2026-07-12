@@ -1,94 +1,223 @@
 import express from "express";
+
 const inquiriesRouter = express.Router();
+
 import db from "./db.mjs";
 
-// Retrieves all records from the INQUIRIES table
+
+// =====================================
+// GET ALL INQUIRIES
+// =====================================
 inquiriesRouter.get("/", (req, res) => {
-    const stmt = db.prepare("SELECT * FROM INQUIRIES");
-    const results = stmt.all();
-    res.json(results);
+
+    try {
+
+        const stmt = db.prepare(
+            "SELECT * FROM INQUIRIES ORDER BY Created_At DESC"
+        );
+
+        const results = stmt.all();
+
+        res.json(results);
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            error: "Failed to retrieve inquiries"
+        });
+
+    }
+
 });
 
 
-// Retrieves a specific inquiry by Inquiry_ID
+
+
+// =====================================
+// GET SINGLE INQUIRY
+// =====================================
 inquiriesRouter.get("/:id", (req, res) => {
-    const stmt = db.prepare(
-        "SELECT * FROM INQUIRIES WHERE Inquiry_ID = ?"
-    );
 
-    const result = stmt.get(req.params.id);
-    res.json(result);
+    try {
+
+        const stmt = db.prepare(
+            "SELECT * FROM INQUIRIES WHERE Inquiry_ID = ?"
+        );
+
+        const result = stmt.get(req.params.id);
+
+
+        if (!result) {
+
+            return res.status(404).json({
+                message: "Inquiry not found"
+            });
+
+        }
+
+
+        res.json(result);
+
+
+    } catch(err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            error:"Failed to retrieve inquiry"
+        });
+
+    }
+
 });
 
 
-// Adds a new inquiry
-inquiriesRouter.post("/", (req, res) => {
-
-    const {
-        Route_ID,
-        Vehicle_ID,
-        Origin,
-        Destination,
-        Travel_Date,
-        Travel_Time,
-        Passenger_Count,
-        Checked_Luggage_Count,
-        Hand_Luggage_Count,
-        Contact_Name,
-        Contact_Phone,
-        Contact_Email,
-        Contact_Wechat,
-        Remark
-    } = req.body;
 
 
-    const stmt = db.prepare(`
-        INSERT INTO INQUIRIES
-        (
+// =====================================
+// CREATE NEW INQUIRY
+// =====================================
+inquiriesRouter.post("/", (req, res)=>{
+
+
+    try {
+
+
+        const {
+
             Route_ID,
-            Vehicle_ID,
+
             Origin,
             Destination,
+
             Travel_Date,
             Travel_Time,
+
             Passenger_Count,
-            Checked_Luggage_Count,
-            Hand_Luggage_Count,
+
+            Checked_Luggage,
+            Hand_Luggage,
+
+            Preferred_Vehicle,
+
             Contact_Name,
             Contact_Phone,
             Contact_Email,
             Contact_Wechat,
+
             Remark
-        )
-        VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
 
 
-    const result = stmt.run(
-        Route_ID,
-        Vehicle_ID,
-        Origin,
-        Destination,
-        Travel_Date,
-        Travel_Time,
-        Passenger_Count,
-        Checked_Luggage_Count,
-        Hand_Luggage_Count,
-        Contact_Name,
-        Contact_Phone,
-        Contact_Email,
-        Contact_Wechat,
-        Remark
-    );
+        } = req.body;
 
 
-    res.json({
-        message: "Inquiry created successfully",
-        Inquiry_ID: result.lastInsertRowid
-    });
+
+        const stmt = db.prepare(`
+
+            INSERT INTO INQUIRIES
+
+            (
+
+                Route_ID,
+
+                Origin,
+                Destination,
+
+                Travel_Date,
+                Travel_Time,
+
+                Passenger_Count,
+
+                Checked_Luggage,
+                Hand_Luggage,
+
+                Preferred_Vehicle,
+
+                Contact_Name,
+                Contact_Phone,
+                Contact_Email,
+                Contact_Wechat,
+
+                Remark,
+
+                Status,
+
+                Created_At
+
+            )
+
+            VALUES
+
+            (
+
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now')
+
+            )
+
+        `);
+
+
+
+        const result = stmt.run(
+
+            Route_ID || null,
+
+            Origin,
+            Destination,
+
+            Travel_Date,
+            Travel_Time,
+
+            Passenger_Count,
+
+            Checked_Luggage,
+            Hand_Luggage,
+
+            Preferred_Vehicle,
+
+            Contact_Name,
+            Contact_Phone,
+            Contact_Email,
+            Contact_Wechat,
+
+            Remark,
+
+            "Pending"
+
+        );
+
+
+
+        res.json({
+
+            message:"Inquiry created successfully",
+
+            Inquiry_ID: result.lastInsertRowid
+
+        });
+
+
+
+    } catch(err) {
+
+
+        console.error(err);
+
+
+        res.status(500).json({
+
+            error:"Failed to create inquiry"
+
+        });
+
+
+    }
+
 
 });
+
 
 
 export default inquiriesRouter;
