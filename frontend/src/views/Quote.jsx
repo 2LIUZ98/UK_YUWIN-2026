@@ -19,8 +19,8 @@ export default function GetQuote() {
 
     Passenger_Count: 1,
 
-    Checked_Luggage: 0,
-    Hand_Luggage: 0,
+    Checked_Luggage_Count: 0,
+    Hand_Luggage_Count: 0,
 
     Preferred_Vehicle: "",
 
@@ -48,8 +48,8 @@ export default function GetQuote() {
 
         [
           "Passenger_Count",
-          "Checked_Luggage",
-          "Hand_Luggage",
+          "Checked_Luggage_Count",
+          "Hand_Luggage_Count",
 
         ].includes(name)
 
@@ -134,8 +134,8 @@ export default function GetQuote() {
 
         Passenger_Count: 1,
 
-        Checked_Luggage: 0,
-        Hand_Luggage: 0,
+        Checked_Luggage_Count: 0,
+        Hand_Luggage_Count: 0,
 
         Preferred_Vehicle: "",
 
@@ -433,7 +433,7 @@ export default function GetQuote() {
 
                 name="Checked_Luggage"
 
-                value={form.Checked_Luggage}
+                value={form.Checked_Luggage_Count}
 
                 onChange={handleChange}
 
@@ -465,7 +465,7 @@ export default function GetQuote() {
 
                 name="Hand_Luggage"
 
-                value={form.Hand_Luggage}
+                value={form.Hand_Luggage_Count}
 
                 onChange={handleChange}
 

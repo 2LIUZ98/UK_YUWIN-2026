@@ -101,8 +101,8 @@ inquiriesRouter.post("/", async (req, res)=>{
 
             Passenger_Count,
 
-            Checked_Luggage,
-            Hand_Luggage,
+            Checked_Luggage_Count,
+            Hand_Luggage_Count,
 
             Preferred_Vehicle,
 
@@ -136,8 +136,8 @@ inquiriesRouter.post("/", async (req, res)=>{
 
                 Passenger_Count,
 
-                Checked_Luggage,
-                Hand_Luggage,
+                Checked_Luggage_Count,
+                Hand_Luggage_Count,
 
                 Preferred_Vehicle,
 
@@ -180,8 +180,8 @@ inquiriesRouter.post("/", async (req, res)=>{
 
             Passenger_Count,
 
-            Checked_Luggage,
-            Hand_Luggage,
+            Checked_Luggage_Count,
+            Hand_Luggage_Count,
 
             Preferred_Vehicle,
 
@@ -218,8 +218,8 @@ inquiriesRouter.post("/", async (req, res)=>{
 
         Passenger_Count,
 
-        Checked_Luggage,
-        Hand_Luggage,
+        Checked_Luggage_Count,
+        Hand_Luggage_Count,
 
         Preferred_Vehicle,
 
