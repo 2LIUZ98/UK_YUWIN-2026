@@ -4,6 +4,9 @@ const inquiriesRouter = express.Router();
 
 import db from "./db.mjs";
 
+import { sendInquiryEmail } from "./email.mjs";
+
+
 
 // =====================================
 // GET ALL INQUIRIES
@@ -31,6 +34,7 @@ inquiriesRouter.get("/", (req, res) => {
     }
 
 });
+
 
 
 
@@ -76,10 +80,11 @@ inquiriesRouter.get("/:id", (req, res) => {
 
 
 
+
 // =====================================
 // CREATE NEW INQUIRY
 // =====================================
-inquiriesRouter.post("/", (req, res)=>{
+inquiriesRouter.post("/", async (req, res)=>{
 
 
     try {
@@ -111,6 +116,8 @@ inquiriesRouter.post("/", (req, res)=>{
 
 
         } = req.body;
+
+
 
 
 
@@ -160,6 +167,8 @@ inquiriesRouter.post("/", (req, res)=>{
 
 
 
+
+
         const result = stmt.run(
 
             Route_ID || null,
@@ -190,6 +199,43 @@ inquiriesRouter.post("/", (req, res)=>{
 
 
 
+
+
+        // =====================================
+        // SEND EMAIL NOTIFICATION
+        // =====================================
+
+        await sendInquiryEmail({
+
+            Contact_Name,
+
+            Origin,
+            Destination,
+
+            Travel_Date,
+            Travel_Time,
+
+            Passenger_Count,
+
+            Checked_Luggage,
+            Hand_Luggage,
+
+            Preferred_Vehicle,
+
+            Contact_Phone,
+            Contact_Email,
+
+            Contact_Wechat,
+
+            Remark
+
+        });
+
+
+
+
+
+
         res.json({
 
             message:"Inquiry created successfully",
@@ -197,6 +243,8 @@ inquiriesRouter.post("/", (req, res)=>{
             Inquiry_ID: result.lastInsertRowid
 
         });
+
+
 
 
 
@@ -217,6 +265,8 @@ inquiriesRouter.post("/", (req, res)=>{
 
 
 });
+
+
 
 
 
