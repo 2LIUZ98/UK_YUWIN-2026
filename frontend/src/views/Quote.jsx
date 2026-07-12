@@ -54,7 +54,7 @@ export default function GetQuote() {
 
     try {
       const response = await fetch(
-        "https://uk-yuwin-2026.onrender.com/inquiries",
+        "https://uk-yuwin.onrender.com/inquiries",
         {
           method: "POST",
           headers: {

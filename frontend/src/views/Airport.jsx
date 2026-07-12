@@ -9,7 +9,7 @@ export default function AirportTransfer() {
   useEffect(() => {
     async function loadRoutes() {
       try {
-        const res = await fetch("https://uk-yuwin-2026.onrender.com/routes/airport/all");
+        const res = await fetch("https://uk-yuwin.onrender.com/routes/airport/all");
         const data = await res.json();
         setRoutes(data);
       } catch (err) {
