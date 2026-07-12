@@ -22,8 +22,6 @@ export default function GetQuote() {
     Checked_Luggage_Count: 0,
     Hand_Luggage_Count: 0,
 
-    Preferred_Vehicle: "",
-
     Contact_Name: "",
     Contact_Phone: "",
     Contact_Email: "",
@@ -135,8 +133,6 @@ export default function GetQuote() {
 
         Checked_Luggage_Count: 0,
         Hand_Luggage_Count: 0,
-
-        Preferred_Vehicle: "",
 
         Contact_Name: "",
         Contact_Phone: "",
@@ -477,72 +473,6 @@ export default function GetQuote() {
 
 
           </div>
-
-
-
-
-
-
-          <div>
-
-
-            <label className="block mb-2">
-
-              Preferred Vehicle
-
-            </label>
-
-
-
-            <select
-
-              name="Preferred_Vehicle"
-
-              value={form.Preferred_Vehicle}
-
-              onChange={handleChange}
-
-              className="w-full rounded-lg bg-slate-800 border border-slate-700 p-3"
-
-            >
-
-
-              <option value="">
-
-                No Preference
-
-              </option>
-
-
-              <option value="5 Seater">
-
-                5 Seater
-
-              </option>
-
-
-              <option value="8 Seater">
-
-                8 Seater
-
-              </option>
-
-
-              <option value="9 Seater">
-
-                9 Seater
-
-              </option>
-
-
-            </select>
-
-
-          </div>
-
-
-
-
 
 
           <h2 className="text-2xl font-semibold">
