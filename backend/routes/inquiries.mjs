@@ -4,33 +4,50 @@ const inquiriesRouter = express.Router();
 
 import db from "./db.mjs";
 
+import { sendInquirySMS } from "./sms.mjs";
+
+
+
 
 // =====================================
 // GET ALL INQUIRIES
 // =====================================
 inquiriesRouter.get("/", (req, res) => {
 
+
     try {
+
 
         const stmt = db.prepare(
             "SELECT * FROM INQUIRIES ORDER BY Created_At DESC"
         );
 
+
         const results = stmt.all();
+
 
         res.json(results);
 
-    } catch (err) {
+
+
+    } catch(err) {
+
 
         console.error(err);
 
+
         res.status(500).json({
-            error: "Failed to retrieve inquiries"
+
+            error:"Failed to retrieve inquiries"
+
         });
+
 
     }
 
+
 });
+
 
 
 
@@ -38,22 +55,32 @@ inquiriesRouter.get("/", (req, res) => {
 // =====================================
 // GET SINGLE INQUIRY
 // =====================================
-inquiriesRouter.get("/:id", (req, res) => {
+inquiriesRouter.get("/:id", (req,res)=>{
+
 
     try {
 
+
         const stmt = db.prepare(
+
             "SELECT * FROM INQUIRIES WHERE Inquiry_ID = ?"
+
         );
+
 
         const result = stmt.get(req.params.id);
 
 
-        if (!result) {
+
+        if(!result){
+
 
             return res.status(404).json({
-                message: "Inquiry not found"
+
+                message:"Inquiry not found"
+
             });
+
 
         }
 
@@ -61,17 +88,25 @@ inquiriesRouter.get("/:id", (req, res) => {
         res.json(result);
 
 
-    } catch(err) {
+
+    } catch(err){
+
 
         console.error(err);
 
+
         res.status(500).json({
+
             error:"Failed to retrieve inquiry"
+
         });
+
 
     }
 
+
 });
+
 
 
 
@@ -79,7 +114,7 @@ inquiriesRouter.get("/:id", (req, res) => {
 // =====================================
 // CREATE NEW INQUIRY
 // =====================================
-inquiriesRouter.post("/", (req, res)=>{
+inquiriesRouter.post("/", async (req,res)=>{
 
 
     try {
@@ -87,25 +122,33 @@ inquiriesRouter.post("/", (req, res)=>{
 
         const {
 
+
             Route_ID,
+
 
             Origin,
             Destination,
 
+
             Travel_Date,
             Travel_Time,
 
+
             Passenger_Count,
+
 
             Checked_Luggage,
             Hand_Luggage,
 
+
             Preferred_Vehicle,
+
 
             Contact_Name,
             Contact_Phone,
             Contact_Email,
             Contact_Wechat,
+
 
             Remark
 
@@ -114,96 +157,187 @@ inquiriesRouter.post("/", (req, res)=>{
 
 
 
+
+
+
         const stmt = db.prepare(`
 
+
             INSERT INTO INQUIRIES
+
 
             (
 
                 Route_ID,
 
+
                 Origin,
                 Destination,
+
 
                 Travel_Date,
                 Travel_Time,
 
+
                 Passenger_Count,
+
 
                 Checked_Luggage,
                 Hand_Luggage,
 
+
                 Preferred_Vehicle,
+
 
                 Contact_Name,
                 Contact_Phone,
                 Contact_Email,
                 Contact_Wechat,
 
+
                 Remark,
+
 
                 Status,
 
+
                 Created_At
 
+
             )
+
 
             VALUES
 
+
             (
 
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now')
+                ?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+
+                "Pending",
+
+                datetime('now')
 
             )
+
 
         `);
 
 
 
+
+
+
         const result = stmt.run(
 
+
             Route_ID || null,
+
 
             Origin,
             Destination,
 
+
             Travel_Date,
             Travel_Time,
 
+
             Passenger_Count,
+
 
             Checked_Luggage,
             Hand_Luggage,
 
+
             Preferred_Vehicle,
+
 
             Contact_Name,
             Contact_Phone,
             Contact_Email,
             Contact_Wechat,
 
-            Remark,
 
-            "Pending"
+            Remark
+
 
         );
 
 
 
-        res.json({
 
-            message:"Inquiry created successfully",
 
-            Inquiry_ID: result.lastInsertRowid
+
+
+        // ================================
+        // SEND SMS NOTIFICATION
+        // ================================
+
+        await sendInquirySMS({
+
+
+            Contact_Name,
+
+
+            Origin,
+            Destination,
+
+
+            Travel_Date,
+            Travel_Time,
+
+
+            Passenger_Count,
+
+
+            Checked_Luggage,
+            Hand_Luggage,
+
+
+            Preferred_Vehicle,
+
+
+            Contact_Phone,
+            Contact_Email,
+
+
+            Contact_Wechat,
+
+
+            Remark
+
 
         });
 
 
 
-    } catch(err) {
+
+
+
+
+        res.json({
+
+
+            message:"Inquiry created successfully",
+
+
+            Inquiry_ID: result.lastInsertRowid
+
+
+        });
+
+
+
+
+
+
+
+    } catch(err){
+
 
 
         console.error(err);
+
 
 
         res.status(500).json({
@@ -213,10 +347,15 @@ inquiriesRouter.post("/", (req, res)=>{
         });
 
 
+
     }
 
 
+
 });
+
+
+
 
 
 
