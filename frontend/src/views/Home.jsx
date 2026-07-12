@@ -20,9 +20,10 @@ export default function HomePage() {
           Airport transfers, long-distance travel, and professional chauffeur services with comfort, safety, and reliability.
         </p>
 
-        <button className="bg-blue-600 hover:bg-blue-700 transition px-8 py-3 rounded-lg font-semibold">
-          Get a Quote
-        </button>
+        <Link to="/quote"
+          className="bg-blue-600 hover:bg-blue-700 transition px-8 py-3 rounded-lg font-semibold">
+            Get a Quote
+        </Link>
       </section>
 
       {/* SERVICES */}
