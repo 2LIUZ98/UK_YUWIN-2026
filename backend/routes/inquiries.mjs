@@ -2,9 +2,9 @@ import express from "express";
 
 const inquiriesRouter = express.Router();
 
-import db from "../db.mjs";
+import db from "./db.mjs";
 
-import { sendInquiryEmail } from "../email.mjs";
+import { sendInquiryEmail } from "./email.mjs";
 
 
 // =====================================
