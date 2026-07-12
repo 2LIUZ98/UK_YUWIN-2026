@@ -37,29 +37,18 @@ export default function GetQuote() {
 
   function handleChange(e) {
 
-    const { name, value } = e.target;
+  const { name, value } = e.target;
 
 
-    setForm((prev) => ({
+  setForm((prev) => ({
 
-      ...prev,
+    ...prev,
 
-      [name]:
+    [name]: value
 
-        [
-          "Passenger_Count",
-          "Checked_Luggage_Count",
-          "Hand_Luggage_Count",
+  }));
 
-        ].includes(name)
-
-          ? Number(value)
-
-          : value
-
-    }));
-
-  }
+}
 
 
 
@@ -92,7 +81,17 @@ export default function GetQuote() {
           },
 
 
-          body: JSON.stringify(form)
+          body: JSON.stringify({
+
+  ...form,
+
+  Passenger_Count: Number(form.Passenger_Count),
+
+  Checked_Luggage_Count: Number(form.Checked_Luggage_Count || 0),
+
+  Hand_Luggage_Count: Number(form.Hand_Luggage_Count || 0)
+
+})
 
         }
 
