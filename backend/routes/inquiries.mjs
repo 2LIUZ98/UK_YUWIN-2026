@@ -91,8 +91,6 @@ inquiriesRouter.post("/", async (req, res)=>{
 
         const {
 
-            Route_ID,
-
             Origin,
             Destination,
 
@@ -104,7 +102,7 @@ inquiriesRouter.post("/", async (req, res)=>{
             Checked_Luggage_Count,
             Hand_Luggage_Count,
 
-            
+
             Contact_Name,
             Contact_Phone,
             Contact_Email,
@@ -124,8 +122,6 @@ inquiriesRouter.post("/", async (req, res)=>{
             INSERT INTO INQUIRIES
 
             (
-
-                Route_ID,
 
                 Origin,
                 Destination,
@@ -166,8 +162,6 @@ inquiriesRouter.post("/", async (req, res)=>{
 
 
         const result = stmt.run(
-
-            Route_ID || null,
 
             Origin,
             Destination,
