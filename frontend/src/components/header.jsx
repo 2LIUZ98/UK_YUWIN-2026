@@ -91,7 +91,7 @@ export default function Header({
           </Dropdown>
 
           <Link
-            to="/book"
+            to="/quote"
             className="bg-blue-600 hover:bg-blue-700 transition px-5 py-2 rounded-full"
           >
             Book Now
@@ -163,7 +163,7 @@ export default function Header({
             Routes
           </button>
 
-          <Link to="/book" onClick={() => setOpen(false)}>
+          <Link to="/quote" onClick={() => setOpen(false)}>
             Book Now
           </Link>
 
