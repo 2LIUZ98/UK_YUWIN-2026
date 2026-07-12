@@ -2,10 +2,9 @@ import express from "express";
 
 const inquiriesRouter = express.Router();
 
-import db from "./db.mjs";
+import db from "../db.mjs";
 
-import { sendInquiryEmail } from "./email.mjs";
-
+import { sendInquiryEmail } from "../email.mjs";
 
 
 // =====================================
@@ -205,32 +204,42 @@ inquiriesRouter.post("/", async (req, res)=>{
         // SEND EMAIL NOTIFICATION
         // =====================================
 
-        await sendInquiryEmail({
+       try {
 
-            Contact_Name,
+    await sendInquiryEmail({
 
-            Origin,
-            Destination,
+        Contact_Name,
 
-            Travel_Date,
-            Travel_Time,
+        Origin,
+        Destination,
 
-            Passenger_Count,
+        Travel_Date,
+        Travel_Time,
 
-            Checked_Luggage,
-            Hand_Luggage,
+        Passenger_Count,
 
-            Preferred_Vehicle,
+        Checked_Luggage,
+        Hand_Luggage,
 
-            Contact_Phone,
-            Contact_Email,
+        Preferred_Vehicle,
 
-            Contact_Wechat,
+        Contact_Phone,
+        Contact_Email,
 
-            Remark
+        Contact_Wechat,
 
-        });
+        Remark
 
+    });
+
+} catch(emailError) {
+
+    console.error(
+        "Email notification failed:",
+        emailError.message
+    );
+
+}
 
 
 
