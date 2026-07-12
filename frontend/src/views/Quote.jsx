@@ -431,7 +431,7 @@ export default function GetQuote() {
 
                 min="0"
 
-                name="Checked_Luggage"
+                name="Checked_Luggage_Count"
 
                 value={form.Checked_Luggage_Count}
 
@@ -463,7 +463,7 @@ export default function GetQuote() {
 
                 min="0"
 
-                name="Hand_Luggage"
+                name="Hand_Luggage_Count"
 
                 value={form.Hand_Luggage_Count}
 
