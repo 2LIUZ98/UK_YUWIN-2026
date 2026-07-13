@@ -1,19 +1,26 @@
 import nodemailer from "nodemailer";
 
-
 const transporter = nodemailer.createTransport({
 
     host: "smtp.gmail.com",
 
-    port: 465,
+    port: 587,
 
-    secure: true,
+    secure: false,
+
+    family: 4,
 
     auth: {
 
         user: process.env.EMAIL_USER,
 
         pass: process.env.EMAIL_PASSWORD
+
+    },
+
+    tls: {
+
+        rejectUnauthorized: true
 
     },
 
@@ -27,29 +34,7 @@ const transporter = nodemailer.createTransport({
 
 
 
-// Test SMTP connection when server starts
-(async () => {
-
-    try {
-
-        await transporter.verify();
-
-        console.log("✅ Gmail SMTP connection successful");
-
-    } catch (err) {
-
-        console.error("❌ Gmail SMTP connection failed");
-
-        console.error(err);
-
-    }
-
-})();
-
-
-
 export async function sendInquiryEmail(inquiry) {
-
 
     console.log("📧 Preparing email...");
 
@@ -109,7 +94,7 @@ ${inquiry.Remark || "None"}
     console.log("📧 Sending email...");
 
 
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
 
         from: process.env.EMAIL_USER,
 
@@ -122,7 +107,6 @@ ${inquiry.Remark || "None"}
     });
 
 
-    console.log("✅ Email sent:", info.messageId);
-
+    console.log("✅ Email sent");
 
 }
