@@ -1,8 +1,13 @@
 import nodemailer from "nodemailer";
 
+
 const transporter = nodemailer.createTransport({
 
-    service: "gmail",
+    host: "smtp.gmail.com",
+
+    port: 465,
+
+    secure: true,
 
     auth: {
 
@@ -10,73 +15,99 @@ const transporter = nodemailer.createTransport({
 
         pass: process.env.EMAIL_PASSWORD
 
-    }
+    },
+
+    connectionTimeout: 10000,
+
+    greetingTimeout: 10000,
+
+    socketTimeout: 10000
 
 });
 
 
-// Verify transporter when the server starts
-transporter.verify(function (err, success) {
 
-    if (err) {
+// Test SMTP connection when server starts
+(async () => {
 
-        console.error("❌ Mail transporter error:");
+    try {
+
+        await transporter.verify();
+
+        console.log("✅ Gmail SMTP connection successful");
+
+    } catch (err) {
+
+        console.error("❌ Gmail SMTP connection failed");
+
         console.error(err);
 
-    } else {
-
-        console.log("✅ Mail transporter is ready.");
-
     }
 
-});
+})();
 
 
 
 export async function sendInquiryEmail(inquiry) {
 
+
     console.log("📧 Preparing email...");
+
 
     const message = `
 
 🚐 NEW BOOKING INQUIRY
 
+
 Name:
 ${inquiry.Contact_Name}
+
 
 Route:
 ${inquiry.Origin} → ${inquiry.Destination}
 
+
 Date:
 ${inquiry.Travel_Date}
+
 
 Time:
 ${inquiry.Travel_Time}
 
+
 Passengers:
 ${inquiry.Passenger_Count}
+
 
 Checked Luggage:
 ${inquiry.Checked_Luggage_Count}
 
+
 Hand Luggage:
 ${inquiry.Hand_Luggage_Count}
+
 
 Phone:
 ${inquiry.Contact_Phone}
 
+
 Email:
 ${inquiry.Contact_Email}
 
+
 WeChat:
 ${inquiry.Contact_Wechat}
+
 
 Remark:
 ${inquiry.Remark || "None"}
 
 `;
 
+
+
     console.log("📧 Sending email...");
+
 
     const info = await transporter.sendMail({
 
@@ -90,6 +121,8 @@ ${inquiry.Remark || "None"}
 
     });
 
-    console.log("✅ Email sent.");
-    console.log(info);
+
+    console.log("✅ Email sent:", info.messageId);
+
+
 }
