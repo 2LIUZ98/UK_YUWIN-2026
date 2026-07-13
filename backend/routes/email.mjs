@@ -1,80 +1,48 @@
-import nodemailer from "nodemailer";
+console.log("✅ Database insert completed.");
 
+try {
 
-const transporter = nodemailer.createTransport({
+    console.log("📧 Sending email...");
 
-    service: "gmail",
+    await sendInquiryEmail({
 
-    auth: {
+        Contact_Name,
 
-        user: process.env.EMAIL_USER,
+        Origin,
+        Destination,
 
-        pass: process.env.EMAIL_PASSWORD
+        Travel_Date,
+        Travel_Time,
 
-    }
+        Passenger_Count,
 
-});
+        Checked_Luggage_Count,
+        Hand_Luggage_Count,
 
+        Contact_Phone,
+        Contact_Email,
 
+        Contact_Wechat,
 
-export async function sendInquiryEmail(inquiry){
-
-
-    const message = `
-
-🚐 NEW BOOKING INQUIRY
-
-
-Name:
-${inquiry.Contact_Name}
-
-
-Route:
-${inquiry.Origin} → ${inquiry.Destination}
-
-
-Date:
-${inquiry.Travel_Date}
-
-
-Time:
-${inquiry.Travel_Time}
-
-
-Passengers:
-${inquiry.Passenger_Count}
-
-
-Vehicle:
-${inquiry.Preferred_Vehicle}
-
-
-Phone:
-${inquiry.Contact_Phone}
-
-
-Email:
-${inquiry.Contact_Email}
-
-
-Remark:
-${inquiry.Remark || "None"}
-
-    `;
-
-
-
-    await transporter.sendMail({
-
-        from: process.env.EMAIL_USER,
-
-        to: process.env.EMAIL_RECEIVE,
-
-        subject: "🚐 New Private Hire Inquiry",
-
-        text: message
+        Remark
 
     });
 
+    console.log("✅ Email finished.");
+
+} catch (emailError) {
+
+    console.error("❌ Email notification failed:");
+    console.error(emailError);
 
 }
+
+console.log("✅ Sending HTTP response.");
+
+res.json({
+
+    message: "Inquiry created successfully",
+
+    Inquiry_ID: result.lastInsertRowid
+
+});
