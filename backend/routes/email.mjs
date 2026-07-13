@@ -1,4 +1,9 @@
 import nodemailer from "nodemailer";
+import dns from "dns";
+
+
+dns.setDefaultResultOrder("ipv4first");
+
 
 const transporter = nodemailer.createTransport({
 
@@ -8,19 +13,11 @@ const transporter = nodemailer.createTransport({
 
     secure: false,
 
-    family: 4,
-
     auth: {
 
         user: process.env.EMAIL_USER,
 
         pass: process.env.EMAIL_PASSWORD
-
-    },
-
-    tls: {
-
-        rejectUnauthorized: true
 
     },
 
@@ -33,7 +30,6 @@ const transporter = nodemailer.createTransport({
 });
 
 
-
 export async function sendInquiryEmail(inquiry) {
 
     console.log("📧 Preparing email...");
@@ -43,52 +39,31 @@ export async function sendInquiryEmail(inquiry) {
 
 🚐 NEW BOOKING INQUIRY
 
-
 Name:
 ${inquiry.Contact_Name}
-
 
 Route:
 ${inquiry.Origin} → ${inquiry.Destination}
 
-
 Date:
 ${inquiry.Travel_Date}
-
 
 Time:
 ${inquiry.Travel_Time}
 
-
 Passengers:
 ${inquiry.Passenger_Count}
-
-
-Checked Luggage:
-${inquiry.Checked_Luggage_Count}
-
-
-Hand Luggage:
-${inquiry.Hand_Luggage_Count}
-
 
 Phone:
 ${inquiry.Contact_Phone}
 
-
 Email:
 ${inquiry.Contact_Email}
-
-
-WeChat:
-${inquiry.Contact_Wechat}
-
 
 Remark:
 ${inquiry.Remark || "None"}
 
 `;
-
 
 
     console.log("📧 Sending email...");
