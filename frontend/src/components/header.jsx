@@ -138,7 +138,7 @@ export default function Header({
             className="flex items-center gap-3"
           >
             <img
-              src="/UKYUWIN-LOGO.JEPG"
+              src="/UKYUWIN-LOGO.JPEG"
               alt="UKYUWIN Logo"
               className="h-10 w-10 object-contain rounded"
             />
