@@ -75,9 +75,20 @@ export default function Header({
 
         <div className="flex items-center gap-8">
 
-          <Link to="/" className="text-xl font-bold">
-            UKYUWIN
-          </Link>
+          <Link 
+              to="/" 
+              className="flex items-center gap-3"
+            >
+              <img
+                src="/UKYUWIN-LOGO.JEPG"
+                alt="UKYUWIN Logo"
+                className="h-10 w-10 object-contain rounded"
+              />
+
+              <span className="text-xl font-bold">
+                UKYUWIN
+              </span>
+            </Link>
 
           <Link to="/" className="hover:text-blue-400 transition">
             Home
@@ -122,9 +133,20 @@ export default function Header({
       {/* ================= MOBILE HEADER ================= */}
       <header className="md:hidden bg-slate-900 text-white px-4 py-3 flex items-center justify-between border-b border-slate-800 sticky top-0 z-50">
 
-        <Link to="/" className="font-bold text-lg">
-          UKYUWIN
-        </Link>
+        <Link 
+            to="/" 
+            className="flex items-center gap-3"
+          >
+            <img
+              src="/UKYUWIN-LOGO.JEPG"
+              alt="UKYUWIN Logo"
+              className="h-10 w-10 object-contain rounded"
+            />
+
+            <span className="text-xl font-bold">
+              UKYUWIN
+            </span>
+          </Link>
 
         <button
           onClick={() => setOpen(true)}
