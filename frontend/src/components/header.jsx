@@ -76,19 +76,19 @@ export default function Header({
         <div className="flex items-center gap-8">
 
           <Link 
-              to="/" 
-              className="flex items-center gap-3"
-            >
-              <img
-                src="/UKYUWIN-LOGO.JEPG"
-                alt="UKYUWIN Logo"
-                className="h-10 w-10 object-contain rounded"
-              />
+            to="/" 
+            className="flex items-center gap-3"
+          >
+            <img
+              src="/UKYUWIN-LOGO.JPEG"
+              alt="UKYUWIN Logo"
+              className="h-10 w-10 object-contain rounded"
+            />
 
-              <span className="text-xl font-bold">
-                UKYUWIN
-              </span>
-            </Link>
+            <span className="text-xl font-bold">
+              UKYUWIN
+            </span>
+          </Link>
 
           <Link to="/" className="hover:text-blue-400 transition">
             Home
